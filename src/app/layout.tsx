@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Artifact Vault v3",
-  description: "Personal artifact library for AI-generated code, dashboards, apps, and tools",
+  title: "Artifact Vault",
+  description: "Your Personal Artifact Library",
 };
 
 export default function RootLayout({
@@ -15,8 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="dark">
+      <body className={`${inter.className} min-h-screen`}>
+        <div className="ambient-gradient" />
+        <div className="relative z-10">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

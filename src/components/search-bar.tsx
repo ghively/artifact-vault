@@ -33,12 +33,19 @@ export function SearchBar() {
   }, [value, debouncedSearch]);
 
   return (
-    <div className="relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+    <div className="relative w-full max-w-xl">
+      <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 pointer-events-none" />
       <Input
         type="search"
         placeholder="Search artifacts..."
-        className="pl-10"
+        className={`
+          h-11 pl-11 pr-4
+          glass-card rounded-xl
+          text-white placeholder:text-white/30
+          border-white/10
+          focus:border-green-500/30 focus:ring-green-500/20
+          transition-all duration-200
+        `}
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />

@@ -28,7 +28,7 @@ export function ArtifactPreview({ content, type }: ArtifactPreviewProps) {
             <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
             <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
             <style>
-              body { margin: 0; padding: 20px; font-family: system-ui, sans-serif; }
+              body { margin: 0; padding: 20px; font-family: system-ui, sans-serif; background: #0a0a0f; }
             </style>
           </head>
           <body>
@@ -56,14 +56,14 @@ export function ArtifactPreview({ content, type }: ArtifactPreviewProps) {
             ref={iframeRef}
             srcDoc={htmlContent}
             sandbox="allow-scripts"
-            className="w-full h-full border-0 rounded-lg"
+            className="w-full h-full border-0 rounded-xl bg-white/5"
             title="Preview"
           />
         );
 
       case "svg":
         return (
-          <div className="flex items-center justify-center h-full bg-card rounded-lg p-4">
+          <div className="flex items-center justify-center h-full glass-card rounded-xl p-6">
             <div
               dangerouslySetInnerHTML={{ __html: content }}
               className="max-w-full max-h-full overflow-auto"
@@ -73,8 +73,8 @@ export function ArtifactPreview({ content, type }: ArtifactPreviewProps) {
 
       case "mermaid":
         return (
-          <div className="flex items-center justify-center h-full bg-card rounded-lg p-4">
-            <pre className="text-sm overflow-auto max-w-full">
+          <div className="flex items-center justify-center h-full glass-card rounded-xl p-6">
+            <pre className="text-sm overflow-auto max-w-full text-white/70">
               <code>{content}</code>
             </pre>
           </div>
@@ -82,14 +82,14 @@ export function ArtifactPreview({ content, type }: ArtifactPreviewProps) {
 
       case "markdown":
         return (
-          <div className="prose prose-invert max-w-none p-4 bg-card rounded-lg h-full overflow-auto">
+          <div className="prose prose-invert prose-sm max-w-none p-6 glass-card rounded-xl h-full overflow-auto custom-scrollbar">
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
         );
 
       default:
         return (
-          <div className="bg-muted p-4 rounded-lg text-sm text-muted-foreground">
+          <div className="glass-card rounded-xl p-6 text-sm text-white/50 text-center">
             Preview not available for {type} type. View the Code tab to see the content.
           </div>
         );
@@ -111,19 +111,29 @@ export function ArtifactPreview({ content, type }: ArtifactPreviewProps) {
 
   return (
     <Tabs defaultValue="preview" className="w-full h-full">
-      <TabsList>
-        <TabsTrigger value="preview">Preview</TabsTrigger>
-        <TabsTrigger value="code">Code</TabsTrigger>
+      <TabsList className="glass-card rounded-lg p-1 bg-white/5 border-white/10 w-fit">
+        <TabsTrigger
+          value="preview"
+          className="rounded-md data-[state=active]:bg-white/10 data-[state=active]:text-white px-4"
+        >
+          Preview
+        </TabsTrigger>
+        <TabsTrigger
+          value="code"
+          className="rounded-md data-[state=active]:bg-white/10 data-[state=active]:text-white px-4"
+        >
+          Code
+        </TabsTrigger>
       </TabsList>
-      <TabsContent value="preview" className="h-[500px]">
+      <TabsContent value="preview" className="mt-4 h-[500px]">
         {renderPreview()}
       </TabsContent>
-      <TabsContent value="code" className="h-[500px]">
-        <div className="h-full rounded-lg overflow-auto">
+      <TabsContent value="code" className="mt-4 h-[500px]">
+        <div className="h-full glass-card rounded-xl overflow-auto custom-scrollbar">
           <SyntaxHighlighter
             language={getLanguage()}
             style={vscDarkPlus}
-            customStyle={{ margin: 0, height: "100%", borderRadius: "8px" }}
+            customStyle={{ margin: 0, height: "100%", borderRadius: "12px", background: "transparent" }}
             showLineNumbers
           >
             {content}

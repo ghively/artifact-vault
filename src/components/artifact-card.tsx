@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Star, Calendar } from "lucide-react";
 
@@ -14,21 +13,107 @@ interface ArtifactCardProps {
   updatedAt: string;
 }
 
-const typeColors: Record<string, string> = {
-  html: "bg-orange-500/10 text-orange-500 border-orange-500/20",
-  react: "bg-blue-500/10 text-blue-500 border-blue-500/20",
-  svg: "bg-purple-500/10 text-purple-500 border-purple-500/20",
-  mermaid: "bg-pink-500/10 text-pink-500 border-pink-500/20",
-  code: "bg-green-500/10 text-green-500 border-green-500/20",
-  markdown: "bg-gray-500/10 text-gray-400 border-gray-500/20",
-  json: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
-  css: "bg-cyan-500/10 text-cyan-500 border-cyan-500/20",
-  text: "bg-slate-500/10 text-slate-400 border-slate-500/20",
-  python: "bg-indigo-500/10 text-indigo-500 border-indigo-500/20",
-  typescript: "bg-blue-600/10 text-blue-600 border-blue-600/20",
-  javascript: "bg-yellow-600/10 text-yellow-600 border-yellow-600/20",
-  shell: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+const typeStyles: Record<string, {
+  color: string;
+  bgGlow: string;
+  iconBg: string;
+  iconColor: string;
+  borderColor: string;
+}> = {
+  html: {
+    color: "text-orange-500",
+    bgGlow: "glow-orange",
+    iconBg: "bg-orange-500/10",
+    iconColor: "text-orange-500",
+    borderColor: "border-orange-500/20",
+  },
+  react: {
+    color: "text-blue-500",
+    bgGlow: "glow-blue",
+    iconBg: "bg-blue-500/10",
+    iconColor: "text-blue-500",
+    borderColor: "border-blue-500/20",
+  },
+  svg: {
+    color: "text-purple-500",
+    bgGlow: "glow-purple",
+    iconBg: "bg-purple-500/10",
+    iconColor: "text-purple-500",
+    borderColor: "border-purple-500/20",
+  },
+  mermaid: {
+    color: "text-pink-500",
+    bgGlow: "glow-pink",
+    iconBg: "bg-pink-500/10",
+    iconColor: "text-pink-500",
+    borderColor: "border-pink-500/20",
+  },
+  code: {
+    color: "text-green-500",
+    bgGlow: "glow-green",
+    iconBg: "bg-green-500/10",
+    iconColor: "text-green-500",
+    borderColor: "border-green-500/20",
+  },
+  markdown: {
+    color: "text-gray-400",
+    bgGlow: "glow-gray",
+    iconBg: "bg-gray-500/10",
+    iconColor: "text-gray-400",
+    borderColor: "border-gray-500/20",
+  },
+  json: {
+    color: "text-yellow-500",
+    bgGlow: "glow-yellow",
+    iconBg: "bg-yellow-500/10",
+    iconColor: "text-yellow-500",
+    borderColor: "border-yellow-500/20",
+  },
+  css: {
+    color: "text-cyan-500",
+    bgGlow: "glow-cyan",
+    iconBg: "bg-cyan-500/10",
+    iconColor: "text-cyan-500",
+    borderColor: "border-cyan-500/20",
+  },
+  text: {
+    color: "text-slate-400",
+    bgGlow: "glow-gray",
+    iconBg: "bg-slate-500/10",
+    iconColor: "text-slate-400",
+    borderColor: "border-slate-500/20",
+  },
+  python: {
+    color: "text-indigo-500",
+    bgGlow: "glow-indigo",
+    iconBg: "bg-indigo-500/10",
+    iconColor: "text-indigo-500",
+    borderColor: "border-indigo-500/20",
+  },
+  typescript: {
+    color: "text-blue-600",
+    bgGlow: "glow-blue",
+    iconBg: "bg-blue-600/10",
+    iconColor: "text-blue-600",
+    borderColor: "border-blue-600/20",
+  },
+  javascript: {
+    color: "text-amber-500",
+    bgGlow: "glow-amber",
+    iconBg: "bg-amber-500/10",
+    iconColor: "text-amber-500",
+    borderColor: "border-amber-500/20",
+  },
+  shell: {
+    color: "text-emerald-500",
+    bgGlow: "glow-emerald",
+    iconBg: "bg-emerald-500/10",
+    iconColor: "text-emerald-500",
+    borderColor: "border-emerald-500/20",
+  },
 };
+
+const defaultStyle = typeStyles.code;
 
 export function ArtifactCard({
   id,
@@ -40,57 +125,82 @@ export function ArtifactCard({
   isFavorite,
   updatedAt,
 }: ArtifactCardProps) {
+  const style = typeStyles[type] || defaultStyle;
   const date = new Date(updatedAt).toLocaleDateString();
 
   return (
-    <Link href={`/artifacts/${id}`}>
-      <Card className="h-full transition-all hover:scale-[1.02] hover:shadow-lg cursor-pointer">
-        <CardHeader>
-          <div className="flex items-start justify-between gap-2">
+    <Link href={`/artifacts/${id}`} className="block">
+      <div className="group relative h-full">
+        <div className={`
+          glass-card rounded-xl p-5 h-full
+          transition-all duration-300 ease-out
+          hover:-translate-y-1 hover:shadow-xl
+          ${style.bgGlow}
+          hover:border-opacity-30
+        `}>
+          {/* Type indicator bar */}
+          <div className={`absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-current to-transparent opacity-20 ${style.color}`} />
+
+          <div className="flex items-start gap-3 mb-3">
+            {/* Type icon */}
+            <div className={`flex-shrink-0 w-10 h-10 rounded-lg ${style.iconBg} flex items-center justify-center ${style.color}`}>
+              <span className="text-xs font-bold uppercase">{type.slice(0, 2)}</span>
+            </div>
+
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-lg truncate flex items-center gap-2">
-                {name}
-                {isFavorite && <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />}
-              </CardTitle>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-semibold text-white truncate group-hover:text-white/90 transition-colors">
+                  {name}
+                </h3>
+                {isFavorite && (
+                  <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 flex-shrink-0" />
+                )}
+              </div>
+
               {description && (
-                <CardDescription className="line-clamp-2 mt-1">
+                <p className="text-sm text-white/50 line-clamp-2 mt-1 leading-relaxed">
                   {description}
-                </CardDescription>
+                </p>
               )}
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="outline" className={typeColors[type] || typeColors.code}>
-              {type}
-            </Badge>
-            {project && (
-              <Badge variant="secondary" className="text-xs">
-                {project}
-              </Badge>
-            )}
-          </div>
+
+          {/* Tags */}
           {tags && tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-3">
-              {tags.slice(0, 4).map((tag) => (
-                <Badge key={tag} variant="outline" className="text-xs">
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {tags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2 py-0.5 text-xs rounded-md bg-white/5 text-white/60 border border-white/10"
+                >
                   {tag}
-                </Badge>
+                </span>
               ))}
-              {tags.length > 4 && (
-                <Badge variant="outline" className="text-xs">
-                  +{tags.length - 4}
-                </Badge>
+              {tags.length > 3 && (
+                <span className="px-2 py-0.5 text-xs rounded-md bg-white/5 text-white/40">
+                  +{tags.length - 3}
+                </span>
               )}
             </div>
           )}
-          <div className="flex items-center gap-1 mt-3 text-xs text-muted-foreground">
+
+          {/* Footer */}
+          <div className="flex items-center justify-between pt-3 border-t border-white/5">
+            <Badge className={`${style.iconBg} ${style.color} ${style.borderColor} border font-medium`}>
+              {type}
+            </Badge>
+            {project && (
+              <span className="text-xs text-white/40">{project}</span>
+            )}
+          </div>
+
+          {/* Date */}
+          <div className="flex items-center gap-1.5 mt-3 text-xs text-white/30">
             <Calendar className="h-3 w-3" />
             {date}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </Link>
   );
 }
