@@ -1,9 +1,10 @@
 import { ArtifactPreview } from "@/components/artifact-preview";
 import { VersionTimeline } from "@/components/version-timeline";
+import { DeleteArtifactButton } from "@/components/delete-artifact-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Calendar, Edit, Star, Trash2 } from "lucide-react";
+import { ArrowLeft, Calendar, Edit, Star } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -236,15 +237,7 @@ export default async function ArtifactDetailPage({
                     Edit
                   </Button>
                 </Link>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  form="delete-form"
-                  className="h-9 px-4 bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:text-red-300 rounded-lg"
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
-                </Button>
+                <DeleteArtifactButton id={id} name={artifact.name} />
               </div>
             </div>
           </div>
@@ -281,10 +274,6 @@ export default async function ArtifactDetailPage({
           </Tabs>
         </div>
       </main>
-
-      <form id="delete-form" action={`/api/artifacts/${id}`} method="DELETE" className="hidden">
-        <button type="submit">Delete</button>
-      </form>
     </div>
   );
 }
