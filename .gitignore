@@ -5,6 +5,14 @@ node_modules/
 .next/
 out/
 
+# Build output
+dist/
+build/
+coverage/
+
+# Claude / agent local state
+.claude/
+
 # Database
 data/*.db
 data/*.db-shm
