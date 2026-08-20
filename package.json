@@ -2,9 +2,11 @@
   "name": "artifact-vault",
   "version": "3.0.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run build:mcp",
+    "build:mcp": "tsup",
     "start": "next start",
     "lint": "next lint",
     "db:generate": "drizzle-kit generate",
@@ -46,6 +48,7 @@
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "^15.1.6",
+    "tsup": "^8.3.5",
     "typescript": "^5.7.3"
   }
 }
