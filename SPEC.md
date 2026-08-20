@@ -148,14 +148,14 @@ In `src/lib/auto-tag.ts`:
   - HTML: iframe sandbox
   - React: iframe sandbox (with React CDN)
   - SVG: inline render
-  - Mermaid: mermaid.js render
+  - Mermaid: raw source shown in a code block (mermaid.js rendering not yet implemented)
   - Markdown: rendered markdown
   - Code: syntax highlighted code block (in Code tab)
 - Versions tab: timeline of changes, click to view diff or restore
 
 ### Create/Edit (/artifacts/new or /artifacts/[id]/edit)
 - Name, description, type selector, project, tags
-- Code editor (Monaco or CodeMirror)
+- Code editor: plain `<Textarea>` (Monaco/CodeMirror integration not yet implemented)
 - Save button
 
 ## Design Aesthetic
@@ -189,7 +189,7 @@ pnpm dev
   "mcpServers": {
     "artifact-vault": {
       "command": "node",
-      "args": ["/Users/ghively/Projects/artifact-vault/dist/mcp/index.js"]
+      "args": ["/path/to/artifact-vault/dist/mcp/index.js"]
     }
   }
 }
