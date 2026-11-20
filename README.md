@@ -2,6 +2,13 @@
 
 A personal artifact library for AI-generated code, dashboards, and tools.
 
+
+## What It Does
+
+- **Stores** AI-generated code, dashboards, and tools in one searchable personal library
+- **Browses** the collection in a Next.js web app backed by a single SQLite database — zero external services
+- **Connects agents** through a built-in MCP server that reads and writes the same database, so Claude Code can file and retrieve artifacts directly
+
 ## Quick Start
 
 ```bash
